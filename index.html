@@ -540,4 +540,67 @@ async function uploadProductImage() {
   }
 }
   </script>
+
+<div class="product-upload">
+  <h2>Add New Product</h2>
+
+  <input id="productName" type="text"
+    placeholder="Product name" required>
+
+  <input id="productPrice" type="number"
+    placeholder="Price in KSh" required>
+
+  <textarea id="productDescription"
+    placeholder="Write product description"
+    required></textarea>
+
+  <input id="productImage" type="file"
+    accept="image/*" required>
+
+  <button onclick="saveProduct()">
+    Add Product
+  </button>
+</div>
+
   
+<section id="adminPanel">
+  <h2>TEKI ADMIN</h2>
+
+  <div id="adminLogin">
+    <h3>Admin Login</h3>
+    <input id="adminEmail" type="email"
+      value="fidelcastro9469@gmail.com"
+      placeholder="Admin email">
+
+    <input id="adminPassword" type="password"
+      placeholder="Password">
+
+    <button id="loginBtn" onclick="adminLogin()">
+      Login
+    </button>
+    <p id="adminMessage"></p>
+  </div>
+
+  <div id="adminDashboard" hidden>
+    <h3>Welcome, Admin</h3>
+
+    <button onclick="adminLogout()">Logout</button>
+
+    <h3>Add Product</h3>
+    <input id="productName" placeholder="Product name">
+    <input id="productPrice" type="number"
+      placeholder="Price in KSh">
+    <textarea id="productDescription"
+      placeholder="Product description"></textarea>
+    <input id="productImage" type="file" accept="image/*">
+
+    <button onclick="saveProduct()">Upload Product</button>
+    <p id="productMessage"></p>
+
+    <hr>
+
+    <h3>Customer Orders</h3>
+    <div id="ordersList">Loading orders...</div>
+  </div>
+</section>
+
