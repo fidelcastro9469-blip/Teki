@@ -1,652 +1,568 @@
-hi<!DOCTYPE html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#090909">
-  <title>TEKI | Online Marketplace</title>
-  <style>
-    :root { --gold:#d7ad52; --gold-light:#f1d58d; --black:#090909; --panel:#151515; --muted:#b8b2a5; }
-    * { box-sizing:border-box; }
-    html { scroll-behavior:smooth; }
-    body { margin:0; background:var(--black); color:#fff; font-family:Arial,Helvetica,sans-serif; }
-    header { position:sticky; top:0; z-index:5; background:rgba(9,9,9,.96); border-bottom:1px solid #3c3019; }
-    .nav { max-width:1100px; margin:auto; padding:16px 20px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
-    .logo { color:var(--gold); font-size:27px; font-weight:900; letter-spacing:4px; text-decoration:none; }
-    nav { display:flex; gap:18px; flex-wrap:wrap; }
-    nav a { color:#eee; text-decoration:none; font-size:14px; }
-    nav a:hover { color:var(--gold); }
-    .hero { min-height:390px; padding:72px 20px; display:grid; place-items:center; text-align:center; background:radial-gradient(ellipse at center,#3a2b12 0%,#17130c 35%,#090909 75%); }
-    .hero-inner { max-width:760px; }
-    .eyebrow { color:var(--gold-light); text-transform:uppercase; letter-spacing:3px; font-size:12px; }
-    h1 { font-size:clamp(42px,8vw,76px); line-height:1.02; margin:16px 0; }
-    h1 span { color:var(--gold); }
-    .hero p { color:#d4d0c7; line-height:1.7; max-width:560px; margin:0 auto 26px; }
-    .btn { display:inline-block; background:var(--gold); color:#111; border:0; border-radius:4px; padding:13px 21px; font-weight:700; text-decoration:none; cursor:pointer; }
-    .btn:hover { background:var(--gold-light); }
-    main { max-width:1100px; margin:auto; padding:48px 20px 70px; }
-    .section-head { display:flex; align-items:end; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:22px; }
-    h2 { font-size:29px; margin:0 0 8px; }
-    .sub { color:var(--muted); margin:0; font-size:14px; }
-    .tools { display:flex; gap:10px; flex-wrap:wrap; }
-    input, select, textarea { background:#101010; color:#fff; border:1px solid #514222; border-radius:4px; padding:11px 12px; font:inherit; }
-    input::placeholder, textarea::placeholder { color:#9c9689; }
-    #search { min-width:190px; }
-    .categories { display:flex; gap:9px; flex-wrap:wrap; margin:0 0 24px; }
-    .category { border:1px solid #574522; background:transparent; color:#e9dfc8; border-radius:30px; padding:8px 14px; cursor:pointer; }
-    .category.active, .category:hover { background:var(--gold); color:#111; }
-    .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
-    .product { background:var(--panel); border:1px solid #332a19; border-radius:7px; overflow:hidden; }
-    .product-art { height:155px; display:grid; place-items:center; background:linear-gradient(135deg,#302613,#111); color:var(--gold-light); font-size:46px; }
-    .product-info { padding:16px; }
-    .product-info h3 { margin:0 0 8px; font-size:18px; }
-    .product-info p { color:var(--muted); font-size:13px; min-height:34px; line-height:1.5; }
-    .product-bottom { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:14px; }
-    .price { color:var(--gold-light); font-weight:800; }
-    .small-btn { padding:9px 12px; font-size:12px; }
-    .empty { grid-column:1/-1; color:var(--muted); padding:35px; text-align:center; border:1px dashed #514222; }
-    .admin { margin-top:55px; padding:22px; background:#111; border:1px solid #4b3a1d; border-radius:7px; }
-    .admin h2 { font-size:22px; color:var(--gold-light); }
-    .admin p { color:var(--muted); font-size:13px; line-height:1.6; }
-    .admin-form { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-top:16px; }
-    .admin-form textarea { grid-column:1/-1; min-height:70px; resize:vertical; }
-    .admin-form button { justify-self:start; }
-    .delete { background:transparent; color:#ffb2a7; border:1px solid #7a3930; border-radius:4px; padding:7px 9px; cursor:pointer; }
-    footer { border-top:1px solid #3c3019; padding:28px 20px; text-align:center; color:var(--muted); font-size:13px; }
-    footer strong { color:var(--gold); letter-spacing:2px; }
-    @media(max-width:760px) { .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .nav { align-items:flex-start; flex-direction:column; } }
-    @media(max-width:500px) { .grid { grid-template-columns:1fr; } .hero { min-height:340px; padding:55px 18px; } .admin-form { grid-template-columns:1fr; } .admin-form textarea { grid-column:auto; } nav { gap:14px; } }
-  </style>
-</head>
-<body>
-  <header>
-    <div class="nav">
-      <a class="logo" href="#">TEKI</a>
-      <nav aria-label="Main navigation">
-        <a href="#home">Home</a><a href="#products">Products</a><a href="#manage">Manage products</a>
-      </nav>
-    </div>
-  </header>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090909">
+<title>TEKI | Premium Marketplace</title>
 
-  <section class="hero" id="home">
-    <div class="hero-inner">
-      <div class="eyebrow">Discover • Shop • Enjoy</div>
-      <h1>Welcome to <span>TEKI</span></h1>
-      <p>Your online marketplace for discovering great products. Explore the collection and contact us to ask about an item.</p>
-      <a class="btn" href="#products">Explore products</a>
-    </div>
-  </section>
-
-  <main>
-    <section id="products">
-      <div class="section-head">
-        <div><h2>Featured products</h2><p class="sub">Browse the latest items in our marketplace.</p></div>
-        <div class="tools">
-          <input id="search" type="search" placeholder="Search products..." aria-label="Search products">
-          <select id="sort" aria-label="Sort products"><option value="default">Sort: Featured</option><option value="low">Price: Low to high</option><option value="high">Price: High to low</option></select>
-        </div>
-      </div>
-      <div class="categories" id="categories">
-        <button class="category active" data-category="All">All</button>
-        <button class="category" data-category="Fashion">Fashion</button>
-        <button class="category" data-category="Electronics">Electronics</button>
-        <button class="category" data-category="Home">Home</button>
-        <button class="category" data-category="Other">Other</button>
-      </div>
-      <div class="grid" id="productGrid"></div>
-    </section>
-
-    <section class="admin" id="manage">
-      <h2>Manage products</h2>
-      <p>Add products to this demo page or remove ones you added. Changes are saved only in this browser on this device; they do not automatically appear for other visitors. A shared online product manager needs a secure database and admin login.</p>
-      <form class="admin-form" id="productForm">
-        <input id="productName" maxlength="60" placeholder="Product name" required>
-        <input id="productPrice" type="number" min="0" step="1" placeholder="Price (KSh)" required>
-        <select id="productCategory"><option>Fashion</option><option>Electronics</option><option>Home</option><option>Other</option></select>
-        <input id="productEmoji" maxlength="4" placeholder="Icon (e.g. 👟)">
-        <textarea id="productDescription" maxlength="140" placeholder="Short product description"></textarea>
-        <button class="btn" type="submit">Add product</button>
-      </form>
-      <div id="manageList" style="margin-top:16px"></div>
-    </section>
-  </main>
-
-  <footer><strong>TEKI</strong><p>Find something you love.</p></footer>
-
-  <script>
-    const starterProducts = [
-      {id:1,name:"Classic Streetwear",price:1800,category:"Fashion",emoji:"👕",description:"A simple everyday style."},
-      {id:2,name:"Everyday Sneakers",price:3200,category:"Fashion",emoji:"👟",description:"Comfortable shoes for daily wear."},
-      {id:3,name:"Wireless Headphones",price:2500,category:"Electronics",emoji:"🎧",description:"Enjoy your favourite audio."},
-      {id:4,name:"Home Decor Set",price:1400,category:"Home",emoji:"🏠",description:"Add a fresh touch to your space."},
-      {id:5,name:"Smart Watch",price:4500,category:"Electronics",emoji:"⌚",description:"A handy everyday accessory."},
-      {id:6,name:"Travel Backpack",price:2100,category:"Other",emoji:"🎒",description:"Carry your essentials with ease."}
-    ];
-    let products;
-    try { products = JSON.parse(localStorage.getItem("tekiProducts")) || starterProducts; }
-    catch { products = starterProducts; }
-    let activeCategory = "All";
-    const grid = document.getElementById("productGrid");
-    const manageList = document.getElementById("manageList");
-    const money = n => "KSh " + Number(n).toLocaleString("en-KE");
-
-    function save() { localStorage.setItem("tekiProducts", JSON.stringify(products)); }
-    function render() {
-      let shown = products.filter(p =>
-        (activeCategory === "All" || p.category === activeCategory) &&
-        (p.name + " " + p.description).toLowerCase().includes(document.getElementById("search").value.toLowerCase())
-      );
-      const sort = document.getElementById("sort").value;
-      if (sort === "low") shown.sort((a,b) => a.price-b.price);
-      if (sort === "high") shown.sort((a,b) => b.price-a.price);
-      grid.innerHTML = shown.length ? shown.map(p => `
-        <article class="product">
-          <div class="product-art" aria-hidden="true">${escapeHTML(p.emoji || "🛍️")}</div>
-          <div class="product-info">
-            <h3>${escapeHTML(p.name)}</h3><p>${escapeHTML(p.description || "")}</p>
-            <div class="product-bottom"><span class="price">${money(p.price)}</span><a class="btn small-btn" href="mailto:hello@example.com?subject=${encodeURIComponent("Question about " + p.name)}">Enquire</a></div>
-          </div>
-        </article>`).join("") : '<div class="empty">No products found. Try another search or category.</div>';
-      manageList.innerHTML = products.length ? products.map(p => `
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid #302819">
-          <span>${escapeHTML(p.name)} — ${money(p.price)}</span>
-          <button class="delete" type="button" data-delete="${p.id}">Delete</button>
-        </div>`).join("") : '<p class="sub">No products yet.</p>';
-    }
-    function escapeHTML(value) {
-      return String(value).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-    }
-    document.getElementById("categories").addEventListener("click", e => {
-      const b = e.target.closest("button[data-category]");
-      if (!b) return;
-      activeCategory = b.dataset.category;
-      document.querySelectorAll(".category").forEach(x => x.classList.toggle("active", x === b));
-      render();
-    });
-    document.getElementById("search").addEventListener("input", render);
-    document.getElementById("sort").addEventListener("change", render);
-    document.getElementById("productForm").addEventListener("submit", e => {
-      e.preventDefault();
-      products.unshift({
-        id: Date.now(),
-        name: document.getElementById("productName").value.trim(),
-        price: Number(document.getElementById("productPrice").value),
-        category: document.getElementById("productCategory").value,
-        emoji: document.getElementById("productEmoji").value.trim() || "🛍️",
-        description: document.getElementById("productDescription").value.trim()
-      });
-      save(); e.target.reset(); render();
-    });
-    manageList.addEventListener("click", e => {
-      const b = e.target.closest("button[data-delete]");
-      if (!b) return;
-      products = products.filter(p => String(p.id) !== b.dataset.delete);
-      save(); render();
-    });
-    render();
-  </script>
-</body>
-</html>
-
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-  import { getDatabase } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-database.js";
-
-  const firebaseConfig = {
-    databaseURL: "https://teki-c600a-default-rtdb.asia-southeast1.firebasedatabase.app/"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const database = getDatabase(app);
-
-  console.log("TEKI connected to Firebase!");
-</script>
-</body>
-
-
-<!-- =========================
-     TEKI ADMIN PANEL
-========================= -->
-
-<section id="tekiAdmin">
 <style>
-#tekiAdmin {
-  background:#111;
-  color:#d4af37;
-  padding:25px;
-  max-width:550px;
-  margin:30px auto;
-  border:1px solid #d4af37;
-  border-radius:14px;
-  font-family:Arial,sans-serif;
-}
-#tekiAdmin input {
-  box-sizing:border-box;
-  width:100%;
-  padding:13px;
-  margin:8px 0;
-}
-#tekiAdmin button {
-  width:100%;
-  padding:13px;
-  margin:8px 0;
-  background:#d4af37;
-  color:#111;
-  border:0;
-  font-weight:bold;
-  cursor:pointer;
-}
-#tekiAdmin img {
-  max-width:100%;
-  max-height:220px;
-  display:none;
-}
-#tekiAdmin [hidden] {
-  display:none !important;
-}
+*{box-sizing:border-box}
+body{margin:0;background:#090909;color:#fff;font-family:Arial,sans-serif}
+header{background:#111;border-bottom:1px solid #c49a35;padding:18px 5%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.logo{font-size:27px;font-weight:900;color:#d5ad50;letter-spacing:3px}
+nav a,button{cursor:pointer}
+nav a{color:white;text-decoration:none;margin:8px;font-size:14px}
+.hero{text-align:center;padding:75px 15px;background:linear-gradient(120deg,#171717,#080808)}
+.hero h1{font-size:42px;color:#d5ad50;margin:0}
+.hero p{color:#bbb}
+.btn{background:#d5ad50;color:#090909;border:0;padding:12px 20px;border-radius:5px;font-weight:bold}
+.btn:hover{background:#f0ca70}
+section{padding:35px 5%}
+h2{color:#d5ad50}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:20px}
+.product{background:#171717;border:1px solid #333;border-radius:10px;overflow:hidden}
+.product img{width:100%;height:190px;object-fit:cover;background:#222}
+.product-info{padding:15px}
+.product h3{margin:5px 0}
+.price{color:#d5ad50;font-size:20px;font-weight:bold}
+input,textarea{width:100%;padding:12px;margin:7px 0;background:#171717;color:white;border:1px solid #555;border-radius:5px}
+textarea{min-height:80px}
+.panel{background:#151515;padding:20px;border:1px solid #444;border-radius:10px;margin-bottom:20px}
+.hidden{display:none}
+footer{text-align:center;padding:25px;color:#aaa;border-top:1px solid #333}
+.cart-item{display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #444}
+.status{color:#d5ad50}
 </style>
+</head>
 
-<h2>TEKI SECURITY ADMIN</h2>
+<body>
 
-<div id="tekiLogin">
-  <input id="adminEmail" type="email"
-    value="fidelcastro9469@gmail.com"
-    placeholder="Admin email">
+<header>
+<div class="logo">TEKI</div>
+<nav>
+<a href="#home">Home</a>
+<a href="#products">Products</a>
+<a href="#cart">Cart (<span id="cartCount">0</span>)</a>
+<a href="#admin">Admin</a>
+</nav>
+</header>
 
-  <input id="adminPassword" type="password"
-    placeholder="Admin password">
-
-  <button id="loginBtn">ADMIN LOGIN</button>
+<div class="hero" id="home">
+<h1>WELCOME TO TEKI</h1>
+<p>Discover quality. Shop with confidence.</p>
+<a href="#products"><button class="btn">SHOP NOW</button></a>
 </div>
 
-<div id="tekiDashboard" hidden>
-  <h3>ADD PRODUCT</h3>
-
-  <input id="productName" placeholder="Product name">
-
-  <input id="productPrice" type="number"
-    min="0.01" step="0.01" placeholder="Price">
-
-  <input id="productImage" type="file"
-    accept="image/*">
-
-  <img id="imagePreview" alt="Product preview">
-
-  <button id="uploadBtn">UPLOAD PICTURE</button>
-
-  <p id="adminStatus" aria-live="polite"></p>
-
-  <button id="saveBtn">SAVE PRODUCT</button>
-
-  <button id="logoutBtn">LOG OUT</button>
+<section id="products">
+<h2>OUR PRODUCTS</h2>
+<input id="search" placeholder="Search products..." oninput="renderProducts()">
+<div class="products" id="productList">
+<p>Loading products...</p>
 </div>
 </section>
 
-<script type="module">
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+<section id="cart">
+<h2>YOUR SHOPPING CART</h2>
+<div class="panel">
+<div id="cartItems">Your cart is empty.</div>
+<h3>Total: <span class="price" id="cartTotal">KES 0</span></h3>
+<h3>Customer Details</h3>
+<input id="customerName" placeholder="Your full name">
+<input id="customerPhone" placeholder="Phone number">
+<input id="customerAddress" placeholder="Delivery location">
+<button class="btn" onclick="placeOrder()">PLACE ORDER</button>
+<p id="orderMessage" class="status"></p>
+</div>
+</section>
 
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+<section id="admin">
+<h2>ADMIN DASHBOARD</h2>
 
-import {
-  getDatabase,
-  ref,
-  push,
-  set
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+<div class="panel" id="loginPanel">
+<h3>Admin Login</h3>
+<input type="email" id="adminEmail" placeholder="Admin email">
+<input type="password" id="adminPassword" placeholder="Password">
+<button class="btn" onclick="loginAdmin()">LOGIN</button>
+<p id="loginMessage"></p>
+</div>
 
-// FIREBASE
+<div class="hidden" id="dashboard">
+<div class="panel">
+<h3>ADD NEW PRODUCT</h3>
+<input id="productName" placeholder="Product name">
+<input id="productPrice" type="number" placeholder="Price in KES">
+<textarea id="productDescription" placeholder="Product description"></textarea>
+<label>Product image</label>
+<input type="file" id="productImage" accept="image/*">
+<button class="btn" onclick="addProduct()">UPLOAD PRODUCT</button>
+<p id="uploadMessage"></p>
+</div>
+
+<div class="panel">
+<h3>MANAGE PRODUCTS</h3>
+<div id="adminProducts"></div>
+</div>
+
+<div class="panel">
+<h3>CUSTOMER ORDERS</h3>
+<div id="ordersList">Loading orders...</div>
+</div>
+
+<button class="btn" onclick="logoutAdmin()">LOG OUT</button>
+</div>
+</section>
+
+<footer>
+<p>© 2026 TEKI Marketplace. All rights reserved.</p>
+</footer>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+
+<script>
+// FIREBASE CONFIGURATION
 const firebaseConfig = {
   apiKey: "AIzaSyCD49R1lkLrvhnUU3OWiQs8nzc8ZYIEeus",
   authDomain: "teki-c600a.firebaseapp.com",
-  databaseURL: "https://teki-c600a-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "teki-c600a",
-  storageBucket: "teki-c600a.firebasestorage.app",
-  messagingSenderId: "862254701241",
-  appId: "1:862254701241:web:c75bfe130e5f59cd745968",
-  measurementId: "G-TYD91ZMG38"
+  databaseURL: "PASTE_YOUR_FIREBASE_DATABASE_URL_HERE",
+  projectId: "teki-c600a"
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getDatabase(app);
+firebase.initializeApp(firebaseConfig);
 
-// IMAGEKIT + VERCEL
-const IMAGEKIT = {
-  endpoint: "https://ik.imagekit.io/Fidelcastro",
-  publicKey: "public_ERnCM3FhVfTsr7/1aoXATFNMsNU=",
-  authURL: "https://teki-n67u.vercel.app/api/imagekit-auth"
-};
+const auth = firebase.auth();
+const db = firebase.database();
 
-let uploadedImageURL = "";
+const ADMIN_EMAIL = "fidelcastro9469@gmail.com";
+const IMAGEKIT_PUBLIC_KEY = "public_ERnCM3FhVfTsr7";
 
-const $ = id => document.getElementById(id);
+// Your secure ImageKit authentication endpoint
+const IMAGEKIT_AUTH_URL =
+"https://teki-n67u.vercel.app/api/imagekit-auth";
 
-// ADMIN LOGIN
-$("loginBtn").onclick = async () => {
-  try {
-    const email = $("adminEmail").value.trim();
-    const password = $("adminPassword").value;
+let products = {};
+let cart = [];
+let isAdmin = false;
 
-    if (email !== "fidelcastro9469@gmail.com") {
-      throw new Error("Unauthorized admin email.");
-    }
-
-    await signInWithEmailAndPassword(auth,email,password);
-    $("adminStatus").textContent = "Login successful.";
-
-  } catch(error) {
-    $("adminStatus").textContent = error.message;
-  }
-};
-
-// VERIFY ADMIN SESSION
-onAuthStateChanged(auth,user => {
-  const authorized =
-    user &&
-    user.email === "fidelcastro9469@gmail.com" &&
-    user.emailVerified;
-
-  $("tekiLogin").hidden = !!authorized;
-  $("tekiDashboard").hidden = !authorized;
+// LOAD PRODUCTS
+db.ref("products").on("value", snapshot => {
+  products = snapshot.val() || {};
+  renderProducts();
+  renderAdminProducts();
 });
 
-// IMAGE UPLOAD
-$("uploadBtn").onclick = async () => {
-  const file = $("productImage").files[0];
+function money(value) {
+  return "KES " + Number(value || 0).toLocaleString();
+}
 
-  if (!auth.currentUser ||
-      auth.currentUser.email !== "fidelcastro9469@gmail.com" ||
-      !auth.currentUser.emailVerified) {
-    $("adminStatus").textContent = "Admin access required.";
+// DISPLAY PRODUCTS
+function renderProducts() {
+  const list = document.getElementById("productList");
+  const search = document.getElementById("search").value.toLowerCase();
+
+  list.innerHTML = "";
+
+  Object.entries(products).forEach(([id,p]) => {
+    if (!(p.name || "").toLowerCase().includes(search)) return;
+
+    const card = document.createElement("div");
+    card.className = "product";
+
+    const img = document.createElement("img");
+    img.src = p.image || "";
+    img.alt = p.name || "Product";
+
+    const info = document.createElement("div");
+    info.className = "product-info";
+
+    const name = document.createElement("h3");
+    name.textContent = p.name || "";
+
+    const desc = document.createElement("p");
+    desc.textContent = p.description || "";
+
+    const price = document.createElement("p");
+    price.className = "price";
+    price.textContent = money(p.price);
+
+    const button = document.createElement("button");
+    button.className = "btn";
+    button.textContent = "ADD TO CART";
+    button.onclick = () => addToCart(id);
+
+    info.append(name, desc, price, button);
+    card.append(img, info);
+    list.appendChild(card);
+  });
+
+  if (!list.children.length) {
+    list.textContent = "No products found.";
+  }
+}
+
+// CART
+function addToCart(id) {
+  const product = products[id];
+  if (!product) return;
+
+  const existing = cart.find(item => item.id === id);
+
+  if (existing) existing.quantity++;
+  else cart.push({...product, id, quantity:1});
+
+  renderCart();
+}
+
+function renderCart() {
+  const container = document.getElementById("cartItems");
+  container.innerHTML = "";
+
+  let total = 0;
+  let count = 0;
+
+  cart.forEach(item => {
+    total += Number(item.price) * item.quantity;
+    count += item.quantity;
+
+    const div = document.createElement("div");
+    div.className = "cart-item";
+
+    const label = document.createElement("span");
+    label.textContent = `${item.name} x ${item.quantity}`;
+
+    const price = document.createElement("span");
+    price.textContent = money(item.price * item.quantity);
+
+    const remove = document.createElement("button");
+    remove.textContent = "Remove";
+    remove.className = "btn";
+    remove.onclick = () => {
+      cart = cart.filter(p => p.id !== item.id);
+      renderCart();
+    };
+
+    div.append(label, price, remove);
+    container.appendChild(div);
+  });
+
+  if (!cart.length) container.textContent = "Your cart is empty.";
+
+  document.getElementById("cartCount").textContent = count;
+  document.getElementById("cartTotal").textContent = money(total);
+}
+
+// PLACE ORDER
+async function placeOrder() {
+  const name = document.getElementById("customerName").value.trim();
+  const phone = document.getElementById("customerPhone").value.trim();
+  const address = document.getElementById("customerAddress").value.trim();
+
+  if (!name || !phone || !address || !cart.length) {
+    alert("Please enter your details and add products.");
     return;
   }
 
-  if (!file || !file.type.startsWith("image/")) {
-    $("adminStatus").textContent = "Select a valid picture.";
-    return;
-  }
-
-  if (file.size > 5 * 1024 * 1024) {
-    $("adminStatus").textContent = "Maximum image size is 5MB.";
-    return;
-  }
-
-  $("adminStatus").textContent = "Uploading...";
+  const order = {
+    customer: name,
+    phone,
+    address,
+    items: cart.map(item => ({
+      id:item.id,
+      name:item.name,
+      price:Number(item.price),
+      quantity:item.quantity
+    })),
+    total:cart.reduce((sum,item) =>
+      sum + Number(item.price) * item.quantity, 0),
+    status:"Pending",
+    createdAt:Date.now()
+  };
 
   try {
-    const token = await auth.currentUser.getIdToken();
+    await db.ref("orders").push(order);
+    cart = [];
+    renderCart();
 
-    const authResponse = await fetch(IMAGEKIT.authURL,{
-      headers: {Authorization:"Bearer " + token}
-    });
+    document.getElementById("orderMessage").textContent =
+      "Your order has been submitted successfully!";
 
-    if (!authResponse.ok) {
-      throw new Error("ImageKit authentication unavailable.");
-    }
-
-    const credentials = await authResponse.json();
-    const data = new FormData();
-
-    data.append("file",file);
-    data.append("fileName",file.name);
-    data.append("publicKey",IMAGEKIT.publicKey);
-    data.append("token",credentials.token);
-    data.append("signature",credentials.signature);
-    data.append("expire",credentials.expire);
-
-    const response = await fetch(
-      "https://upload.imagekit.io/api/v1/files/upload",
-      {method:"POST",body:data}
-    );
-
-    const result = await response.json();
-
-    if (!response.ok) {
-      throw new Error(result.message || "Upload failed.");
-    }
-
-    uploadedImageURL = result.url;
-
-    $("imagePreview").src = result.url;
-    $("imagePreview").style.display = "block";
-    $("adminStatus").textContent = "Picture uploaded!";
+    document.getElementById("customerName").value = "";
+    document.getElementById("customerPhone").value = "";
+    document.getElementById("customerAddress").value = "";
 
   } catch(error) {
-    $("adminStatus").textContent = error.message;
+    alert("Order failed: " + error.message);
   }
-};
+}
 
-// SAVE PRODUCT
-$("saveBtn").onclick = async () => {
-  const user = auth.currentUser;
+// ADMIN LOGIN
+async function loginAdmin() {
+  const email = document.getElementById("adminEmail").value.trim();
+  const password = document.getElementById("adminPassword").value;
 
-  if (!user ||
-      user.email !== "fidelcastro9469@gmail.com" ||
-      !user.emailVerified) {
-    $("adminStatus").textContent = "Admin access required.";
-    return;
-  }
-
-  const name = $("productName").value.trim();
-  const price = Number($("productPrice").value);
-
-  if (!name || !Number.isFinite(price) ||
-      price <= 0 || !uploadedImageURL) {
-    $("adminStatus").textContent =
-      "Enter product details and upload a picture.";
+  if (email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+    document.getElementById("loginMessage").textContent =
+      "This email is not authorized.";
     return;
   }
 
   try {
-    const productRef = push(ref(db,"products"));
+    await auth.signInWithEmailAndPassword(email, password);
+  } catch(error) {
+    document.getElementById("loginMessage").textContent = error.message;
+  }
+}
 
-    await set(productRef,{
+// VERIFY ADMIN PERMISSION
+auth.onAuthStateChanged(async user => {
+  isAdmin = false;
+
+  if (!user) {
+    showLogin();
+    return;
+  }
+
+  if (user.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+    await auth.signOut();
+    showLogin();
+    return;
+  }
+
+  try {
+    const snapshot = await db.ref("admins/" + user.uid).once("value");
+
+    if (snapshot.val() !== true) {
+      document.getElementById("loginMessage").textContent =
+        "Admin access has not been authorized yet.";
+      await auth.signOut();
+      showLogin();
+      return;
+    }
+
+    isAdmin = true;
+    document.getElementById("loginPanel").classList.add("hidden");
+    document.getElementById("dashboard").classList.remove("hidden");
+
+    renderAdminProducts();
+    loadOrders();
+
+  } catch(error) {
+    document.getElementById("loginMessage").textContent = error.message;
+    await auth.signOut();
+  }
+});
+
+function showLogin() {
+  document.getElementById("loginPanel").classList.remove("hidden");
+  document.getElementById("dashboard").classList.add("hidden");
+}
+
+async function logoutAdmin() {
+  await auth.signOut();
+}
+
+// IMAGE UPLOAD
+async function uploadImage(file) {
+  const response = await fetch(IMAGEKIT_AUTH_URL);
+
+  if (!response.ok) {
+    throw new Error("ImageKit authentication endpoint is not configured.");
+  }
+
+  const credentials = await response.json();
+
+  const data = new FormData();
+  data.append("file", file);
+  data.append("fileName", "teki-" + Date.now());
+  data.append("publicKey", IMAGEKIT_PUBLIC_KEY);
+  data.append("token", credentials.token);
+  data.append("signature", credentials.signature);
+  data.append("expire", credentials.expire);
+
+  const result = await fetch(
+    "https://upload.imagekit.io/api/v1/files/upload",
+    {method:"POST",body:data}
+  );
+
+  const uploaded = await result.json();
+
+  if (!result.ok) throw new Error(uploaded.message || "Image upload failed.");
+
+  return uploaded.url;
+}
+
+// ADD PRODUCT
+async function addProduct() {
+  if (!isAdmin) return alert("Admin access required.");
+
+  const name = document.getElementById("productName").value.trim();
+  const price = Number(document.getElementById("productPrice").value);
+  const description =
+    document.getElementById("productDescription").value.trim();
+  const file = document.getElementById("productImage").files[0];
+
+  if (!name || !price || price <= 0 || !file) {
+    alert("Enter the product name, valid price and image.");
+    return;
+  }
+
+  const message = document.getElementById("uploadMessage");
+  message.textContent = "Uploading product image...";
+
+  try {
+    const image = await uploadImage(file);
+
+    await db.ref("products").push({
       name,
       price,
-      image:uploadedImageURL,
+      description,
+      image,
       createdAt:Date.now()
     });
 
-    $("adminStatus").textContent = "Product saved successfully!";
+    message.textContent = "Product added successfully!";
 
-    $("productName").value = "";
-    $("productPrice").value = "";
-    $("productImage").value = "";
-    $("imagePreview").style.display = "none";
-    uploadedImageURL = "";
+    document.getElementById("productName").value = "";
+    document.getElementById("productPrice").value = "";
+    document.getElementById("productDescription").value = "";
+    document.getElementById("productImage").value = "";
 
   } catch(error) {
-    $("adminStatus").textContent = "Save failed: " + error.message;
+    message.textContent = "Error: " + error.message;
   }
-};
+}
 
-// LOGOUT
-$("logoutBtn").onclick = () => signOut(auth);
-    </script>
-    
-<!-- TEKI PRODUCT IMAGE UPLOAD -->
-<div id="imageUploadSection">
-  <h3>Upload Product Picture</h3>
+// ADMIN PRODUCT MANAGEMENT
+function renderAdminProducts() {
+  const container = document.getElementById("adminProducts");
+  if (!container || !isAdmin) return;
 
-  <input type="file" id="productImage" accept="image/*">
+  container.innerHTML = "";
 
-  <button onclick="uploadProductImage()">
-    Upload Picture
-  </button>
+  Object.entries(products).forEach(([id,p]) => {
+    const div = document.createElement("div");
+    div.className = "panel";
 
-  <p id="uploadStatus"></p>
-  <img id="uploadedPreview"
-       style="max-width:200px;display:none;">
-</div>
+    const title = document.createElement("h3");
+    title.textContent = p.name;
 
-<script>
-async function uploadProductImage() {
-  const file = document.getElementById("productImage").files[0];
-  const status = document.getElementById("uploadStatus");
-  const preview = document.getElementById("uploadedPreview");
+    const price = document.createElement("p");
+    price.textContent = money(p.price);
 
-  if (!file) {
-    status.textContent = "Please select a picture.";
+    const edit = document.createElement("button");
+    edit.className = "btn";
+    edit.textContent = "EDIT";
+    edit.onclick = () => editProduct(id);
+
+    const remove = document.createElement("button");
+    remove.className = "btn";
+    remove.textContent = "DELETE";
+    remove.style.marginLeft = "8px";
+    remove.onclick = () => deleteProduct(id);
+
+    div.append(title, price, edit, remove);
+    container.appendChild(div);
+  });
+}
+
+async function editProduct(id) {
+  if (!isAdmin) return;
+
+  const p = products[id];
+  const name = prompt("Product name:", p.name);
+  if (name === null) return;
+
+  const price = prompt("Product price:", p.price);
+  if (price === null || !Number.isFinite(Number(price)) || Number(price) <= 0) {
+    alert("Enter a valid price.");
     return;
   }
 
-  status.textContent = "Uploading...";
+  const description = prompt("Description:", p.description || "");
+  if (description === null) return;
 
-  try {
-    // Get secure upload authentication
-    const authResponse = await fetch("/api/imagekit-auth");
-    if (!authResponse.ok) throw new Error("Authentication failed");
+  await db.ref("products/" + id).update({
+    name:name.trim(),
+    price:Number(price),
+    description
+  });
+}
 
-    const auth = await authResponse.json();
+async function deleteProduct(id) {
+  if (!isAdmin) return;
 
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("fileName", file.name);
-    formData.append("publicKey", auth.publicKey);
-    formData.append("token", auth.token);
-    formData.append("signature", auth.signature);
-    formData.append("expire", auth.expire);
-
-    const response = await fetch(
-      "https://upload.imagekit.io/api/v1/files/upload",
-      {
-        method: "POST",
-        body: formData
-      }
-    );
-
-    const result = await response.json();
-
-    if (!response.ok) {
-      throw new Error(result.message || "Upload failed");
-    }
-
-    preview.src = result.url;
-    preview.style.display = "block";
-
-    status.textContent = "Picture uploaded successfully!";
-
-    // Save image URL for your product form
-    window.tekiUploadedImageUrl = result.url;
-
-  } catch (error) {
-    status.textContent = "Error: " + error.message;
+  if (confirm("Delete this product?")) {
+    await db.ref("products/" + id).remove();
   }
 }
-  </script>
 
-<div class="product-upload">
-  <h2>Add New Product</h2>
+// ADMIN ORDERS
+function loadOrders() {
+  db.ref("orders").on("value", snapshot => {
+    if (!isAdmin) return;
 
-  <input id="productName" type="text"
-    placeholder="Product name" required>
+    const container = document.getElementById("ordersList");
+    container.innerHTML = "";
 
-  <input id="productPrice" type="number"
-    placeholder="Price in KSh" required>
+    const orders = snapshot.val() || {};
 
-  <textarea id="productDescription"
-    placeholder="Write product description"
-    required></textarea>
+    Object.entries(orders).reverse().forEach(([id,o]) => {
+      const div = document.createElement("div");
+      div.className = "panel";
 
-  <input id="productImage" type="file"
-    accept="image/*" required>
+      const title = document.createElement("h3");
+      title.textContent = "Order: " + id;
 
-  <button onclick="saveProduct()">
-    Add Product
-  </button>
-</div>
+      const customer = document.createElement("p");
+      customer.textContent =
+        "Customer: " + o.customer + " | Phone: " + o.phone;
 
+      const address = document.createElement("p");
+      address.textContent = "Delivery: " + o.address;
+
+      const items = document.createElement("p");
+      items.textContent = (o.items || []).map(i =>
+        `${i.name} x ${i.quantity}`
+      ).join(", ");
+
+      const total = document.createElement("p");
+      total.textContent = "Total: " + money(o.total);
+
+      const status = document.createElement("p");
+      status.textContent = "Status: " + o.status;
+
+      const update = document.createElement("button");
+      update.className = "btn";
+      update.textContent = "MARK COMPLETED";
+      update.onclick = () =>
+        db.ref("orders/" + id).update({status:"Completed"});
+
+      const remove = document.createElement("button");
+      remove.className = "btn";
+      remove.textContent = "DELETE ORDER";
+      remove.style.marginLeft = "8px";
+      remove.onclick = () => {
+        if (confirm("Delete this order?")) {
+          db.ref("orders/" + id).remove();
+        }
+      };
+
+      div.append(title,customer,address,items,total,status,update,remove);
+      container.appendChild(div);
+    });
+
+    if (!container.children.length) {
+      container.textContent = "No orders yet.";
+    }
+  });
+}
+
+renderCart();
+</script>
+
+</body>
+  </html>
   
-<section id="adminPanel">
-  <h2>TEKI ADMIN</h2>
-
-  <div id="adminLogin">
-    <h3>Admin Login</h3>
-    <input id="adminEmail" type="email"
-      value="fidelcastro9469@gmail.com"
-      placeholder="Admin email">
-
-    <input id="adminPassword" type="password"
-      placeholder="Password">
-
-    <button id="loginBtn" onclick="adminLogin()">
-      Login
-    </button>
-    <p id="adminMessage"></p>
-  </div>
-
-  <div id="adminDashboard" hidden>
-    <h3>Welcome, Admin</h3>
-
-    <button onclick="adminLogout()">Logout</button>
-
-    <h3>Add Product</h3>
-    <input id="productName" placeholder="Product name">
-    <input id="productPrice" type="number"
-      placeholder="Price in KSh">
-    <textarea id="productDescription"
-      placeholder="Product description"></textarea>
-    <input id="productImage" type="file" accept="image/*">
-
-    <button onclick="saveProduct()">Upload Product</button>
-    <p id="productMessage"></p>
-
-    <hr>
-
-    <h3>Customer Orders</h3>
-    <div id="ordersList">Loading orders...</div>
-  </div>
-</section>
-
-
-<section id="admin-orders">
-  <h2>Customer Orders</h2>
-  <div id="orders-list">Loading orders...</div>
-</section>
-
-<style>
-#admin-orders {
-  background: #111;
-  color: #d4af37;
-  padding: 20px;
-  border-radius: 12px;
-  margin: 20px;
-}
-.order-card {
-  background: #222;
-  padding: 15px;
-  margin: 15px 0;
-  border: 1px solid #d4af37;
-  border-radius: 10px;
-  color: white;
-}
-.order-card button {
-  background: #d4af37;
-  color: black;
-  padding: 9px;
-  border: none;
-  border-radius: 5px;
-  margin-top: 10px;
-}
-</style>
-
-{
-  "rules": {
-    ".read": false,
-    ".write": false,
-    "products": {
-      ".read": true,
-      ".write": "auth != null && auth.token.email == 'fidelcastro9469@gmail.com' && auth.token.email_verified == true"
-    },
-    "orders": {
-      ".read": "auth != null && auth.token.email == 'fidelcastro9469@gmail.com' && auth.token.email_verified == true",
-      ".write": false
-    }
-  }
-}
