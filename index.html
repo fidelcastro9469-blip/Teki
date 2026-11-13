@@ -635,3 +635,18 @@ async function uploadProductImage() {
   margin-top: 10px;
 }
 </style>
+
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "products": {
+      ".read": true,
+      ".write": "auth != null && auth.token.email == 'fidelcastro9469@gmail.com' && auth.token.email_verified == true"
+    },
+    "orders": {
+      ".read": "auth != null && auth.token.email == 'fidelcastro9469@gmail.com' && auth.token.email_verified == true",
+      ".write": false
+    }
+  }
+}
